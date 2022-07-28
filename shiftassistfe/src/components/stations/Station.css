@@ -1,0 +1,52 @@
+.Station-main {
+    height: 100vh;
+    background: linear-gradient(rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(6px);
+}
+
+.inputLine {
+    width: 70%;
+    margin: 20px auto;
+    display: flex;
+}
+
+.Station-main input {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    color: #ADB5C5;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid #ADB5C5;
+    padding: 10px 5px;
+    border-radius: 10px;
+    width: 60px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.Station-main label {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: left;
+    color: #3440B6;
+    margin: auto;
+    margin-left: 0;
+}
+
+.submitButton{
+    position: absolute;
+    left: 50vw;
+    bottom: 15vh;
+    transform: translateX(-50%);
+}

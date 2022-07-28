@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
+import Home from './components/Home';
+import Flow from './components/Flow';
+import Guide from './components/Guide';
+import AGT from './components/stations/AGT';
+import BOK from './components/stations/BOK';
+import SPIN from './components/stations/SPIN';
+import PKT from './components/stations/PKT';
+import Admin from './components/Admin';
+
 function App() {
+  let component
+  switch (window.location.pathname) {
+    default:
+      component = <Home />
+      break
+    case "/flow":
+      component = <Flow />
+      break
+    case "/guide":
+      component = <Guide />
+      break
+    case "/agt":
+      component = <AGT />
+      break
+    case "/bok":
+      component = <BOK />
+      break
+    case "/spin":
+      component = <SPIN />
+      break
+    case "/pkt":
+      component = <PKT />
+      break
+      case "/admin":
+        component = <Admin />
+        break
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {component}
     </div>
   );
 }
