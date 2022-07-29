@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 
+import axios from 'axios';
+
 import Home from './components/Home';
 import Flow from './components/Flow';
 import Guide from './components/Guide';
@@ -8,7 +10,9 @@ import AGT from './components/stations/AGT';
 import BOK from './components/stations/BOK';
 import SPIN from './components/stations/SPIN';
 import PKT from './components/stations/PKT';
+import Afdeling from './components/Afdeling';
 import Admin from './components/Admin';
+
 
 function App() {
   let component
