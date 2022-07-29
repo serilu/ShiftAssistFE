@@ -5,7 +5,12 @@ import axios from "axios";
 
 class Admin extends React.Component {
 
-    state = { aantalTypes:1, pakketTypes: "", naamAfdeling: ""
+    state = {
+        pakketType1: "", 
+        pakketType2: "", 
+        pakketType3: "", 
+        pakketType4: "", 
+        naamAfdeling: "",
 
     };
 
@@ -21,42 +26,68 @@ class Admin extends React.Component {
         for (let i = 0; i < event.target.value; i++) {
             let inputVeld = pakketNaamInput.cloneNode(true)
             inputVeld.id = i+1
-            section.appendChild(inputVeld)
+            section.appendChild(inputVeld);
         }
         this.setState({aantalTypes:event.target.value})
     }
 
-    saveTypes = (event) => {
-        event.preventDefault();
-        let pakketString = "";
+    saveType = (event) =>{
 
-        for (let i = 0; i < this.state.aantalTypes; i++) {
-            let value = document.getElementById(i+1).value
-            pakketString = pakketString + "|" + value;
-            this.setState({pakketTypes: pakketString})
-        }
+        
+        if (event.target.id == 1) {
+            this.setState({
+                pakketType1: event.target.value
+        })};
+        if (event.target.id == 2) {
+            this.setState({
+                pakketType2: event.target.value
+        })};
+        if (event.target.id == 3) {
+            this.setState({
+                pakketType3: event.target.value
+        })};
+        if (event.target.id == 4) {
+            this.setState({
+                pakketType4: event.target.value
+        })};
+
     }
 
-    submit = (event) => {
+    // saveType(event){
+    //     console.log("a neef");
+    
+    //     event.preventDefault();
+    //     let pakketString = "";
+
+    //     for (let i = 0; i < this.state.aantalTypes; i++) {
+    //         let value = document.getElementById(i+1).value
+    //         pakketString = pakketString + "|" + value;
+    //         this.setState({pakketTypes: pakketString})
+    //     }
+    // };
+
+
+    callDB = (event) => {
         event.preventDefault();
-        this.callDB();
-    }
-    callDB = () => {
+        console.log(
+            this.state.pakketType1,
+            this.state.pakketType2,
+            this.state.pakketType3,
+            this.state.pakketType4,
+            this.state.naamAfdeling,
+        )
+        
 
-
-        let dbData = {}
-
-        dbData = {
+        const dbData = {
             naamAfdeling: this.state.naamAfdeling,
-            pakketTypes: this.state.pakketTypes,
-           
-            
         }
-        console.log(dbData);
 
-        // axios.post(`api/addAfdeling`, dbData).then(response => {
+        axios.post(`api/addAfdeling`, dbData).then(response => {
+            if (response.data.status === 200) {
+                console.log("yo hij doet het man")
+                console.log(response.data)
 
-        // });
+    }});
     }
 
     render() {
@@ -68,21 +99,19 @@ class Admin extends React.Component {
                   <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
                   <h1>Log In </h1>
               </nav>
-                <form className="login_main_form" onSubmit={this.submit}>
+                <form className="login_main_form" onSubmit={this.callDB}>
 
 
-                        <label className="login_main_form_section_label" for="afdeling">Naam Afdeling:</label>
+                        <label className="login_main_form_section_label">Naam Afdeling:</label>
                         <input className="login_main_form_section_input" placeholder='adfdeling naam' onChange={this.saveName} type="text"/><br/>
 
-                         <label className="login_main_form_section_label" for="types">Aantal pakkettypes</label>
-                        <select onChange={this.onSearch} id="cars" name="cars">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
+                         <label className="login_main_form_section_label">Aantal pakkettypes</label>
+
                         <section id="pakketNamen">
-                            <input required id="1" type="text" className="pakketNaamInput"  onChange={this.saveTypes} name="types"/>
+                            <input required id="1" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
+                            <input id="2" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
+                            <input id="3" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
+                            <input id="4" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
                         </section>
 
                         <button className="login_main_form_button" type="submit"> Verzend</button>
