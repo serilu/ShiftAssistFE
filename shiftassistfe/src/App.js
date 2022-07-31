@@ -13,6 +13,7 @@ import PKT from './components/stations/PKT';
 import Afdeling from './components/Afdeling';
 import Admin from './components/Admin';
 
+axios.defaults.baseURL = "http://localhost:8000/";
 
 function App() {
   let component

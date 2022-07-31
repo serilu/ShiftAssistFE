@@ -66,23 +66,21 @@ class Admin extends React.Component {
     //     }
     // };
 
-
-    callDB = (event) => {
+    submit = (event) => {
         event.preventDefault();
-        console.log(
-            this.state.pakketType1,
-            this.state.pakketType2,
-            this.state.pakketType3,
-            this.state.pakketType4,
-            this.state.naamAfdeling,
-        )
-        
+        this.callDB();
+    }
+    callDB = () => {
 
         const dbData = {
-            naamAfdeling: this.state.naamAfdeling,
+            pakketType1: this.state.pakketType1,
+            pakketType2: this.state.pakketType2,
+            pakketType3: this.state.pakketType3,
+            name: this.state.naamAfdeling,
         }
-
+        console.log(dbData);
         axios.post(`api/addAfdeling`, dbData).then(response => {
+            console.log(response)
             if (response.data.status === 200) {
                 console.log("yo hij doet het man")
                 console.log(response.data)
@@ -99,13 +97,12 @@ class Admin extends React.Component {
                   <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
                   <h1>Log In </h1>
               </nav>
-                <form className="login_main_form" onSubmit={this.callDB}>
-
-
-                        <label className="login_main_form_section_label">Naam Afdeling:</label>
+                <form enctype="multipart/form-data" action="/products" method="post" className="login_main_form" onSubmit={this.submit}>
+                
+                        <label className="login_main_form_section_label" >Naam Afdeling:</label>
                         <input className="login_main_form_section_input" placeholder='adfdeling naam' onChange={this.saveName} type="text"/><br/>
 
-                         <label className="login_main_form_section_label">Aantal pakkettypes</label>
+                         <label className="login_main_form_section_label" >Aantal pakkettypes</label>
 
                         <section id="pakketNamen">
                             <input required id="1" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
