@@ -76,6 +76,7 @@ class Admin extends React.Component {
             pakketType1: this.state.pakketType1,
             pakketType2: this.state.pakketType2,
             pakketType3: this.state.pakketType3,
+            pakketType4: this.state.pakketType4,
             name: this.state.naamAfdeling,
         }
         console.log(dbData);
