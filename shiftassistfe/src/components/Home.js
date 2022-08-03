@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../assets/logo.png';
 import './Home.css';
+import axios from "axios";
 
 class Home extends React.Component {
     
@@ -10,6 +11,11 @@ class Home extends React.Component {
     PKT_fields = [sessionStorage.getItem('PKT_ROW'), sessionStorage.getItem('PKT_wittekaarten'), sessionStorage.getItem('PKT_mx5'), sessionStorage.getItem('PKT_HAGB'), sessionStorage.getItem('PKT_HAGO'), sessionStorage.getItem('PKT_transit')];
 
     ALL_fields = [this.AGT_fields, this.BOK_fields, this.SPIN_fields, this.PKT_fields];
+
+    state = {
+        onLoad: true,
+        afdelingen: [],
+    };
 
     checkAllFields = () => {
         sessionStorage.setItem('toggleDisabled', 'Button');
@@ -56,14 +62,33 @@ class Home extends React.Component {
 
     }
 
-    render() {        
+    getData = () => {
+
+        axios.get(`api/getAfdeling`).then(response => {
+            if (response.data.status === 200) {
+                this.setState({afdelingen: response.data.afdelingen});
+                // console.log(this.state.afdelingen)
+    }});
+    }
+
+    saveAfdeling = (event, afdeling) => {
+        console.log(afdeling)
+        sessionStorage.removeItem('afdeling');
+        sessionStorage.setItem('afdeling', afdeling);
+        window.location.replace("/afdeling");
+    }
+
+    render() {
+        if (this.state.onLoad === true) {
+            this.getData();
+            this.setState({onLoad:false})
+        }
+
         this.checkFields();
         this.checkAllFields();
         return (
             <body>
 
-
-            
             <main className="Home-main">
                 <img src={logo} className="Home-logo" alt="logo" />
                 <h1>ShiftAssist</h1>
@@ -74,6 +99,14 @@ class Home extends React.Component {
                 <a href='/bok' className='Button'>BOK<i className={sessionStorage.getItem('BOKchecked')}></i></a>
                 <a href='/spin' className='Button'>SPIN<i className={sessionStorage.getItem('SPINchecked')}></i></a>
                 <a href='/pkt' className='Button'>PKT<i className={sessionStorage.getItem('PKTchecked')}></i></a>
+                <article>
+                    {this.state.afdelingen.map(afdeling => {
+                        return (
+                            <section onClick={event => this.saveAfdeling(event, afdeling.name)} className='Button'>{afdeling.name}</section>
+                        ) 
+                    })}     
+                </article>
+   
                 <a href='/flow' className={sessionStorage.getItem('toggleDisabled')}>Current Flow</a>
                 <a href='/guide' className='Button'>Help</a>
             </main>

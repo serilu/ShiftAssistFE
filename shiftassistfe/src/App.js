@@ -10,8 +10,8 @@ import AGT from './components/stations/AGT';
 import BOK from './components/stations/BOK';
 import SPIN from './components/stations/SPIN';
 import PKT from './components/stations/PKT';
-import Afdeling from './components/Afdeling';
 import Admin from './components/Admin';
+import Afdeling from './components/stations/Afdeling';
 
 axios.defaults.baseURL = "http://localhost:8000/";
 
@@ -38,6 +38,9 @@ function App() {
       break
     case "/pkt":
       component = <PKT />
+      break
+    case "/afdeling":
+      component = <Afdeling />
       break
       case "/admin":
         component = <Admin />
