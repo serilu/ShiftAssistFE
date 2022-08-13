@@ -10,7 +10,7 @@ class Home extends React.Component {
     SPIN_fields = [sessionStorage.getItem('SPIN_rc')];
     PKT_fields = [sessionStorage.getItem('PKT_ROW'), sessionStorage.getItem('PKT_wittekaarten'), sessionStorage.getItem('PKT_mx5'), sessionStorage.getItem('PKT_HAGB'), sessionStorage.getItem('PKT_HAGO'), sessionStorage.getItem('PKT_transit')];
 
-    ALL_fields = [this.AGT_fields, this.BOK_fields, this.SPIN_fields, this.PKT_fields];
+    ALL_fields = [this.AGT_fields, this.BOK_fields, this.SPIN_fields, this.PKT_fields]
 
     state = {
         onLoad: true,
@@ -22,8 +22,7 @@ class Home extends React.Component {
         for (let i = 0; i < this.ALL_fields.length; i++) {
             for (let j = 0; j < this.ALL_fields[i].length; j++) {
                 if (this.ALL_fields[i][j] == null) {
-                    sessionStorage.setItem('toggleDisabled', 'Button Disabled');
-                    
+                    localStorage.setItem('toggleDisabled', 'Button Disabled');
                 }
             }
         }
@@ -66,9 +65,18 @@ class Home extends React.Component {
 
         axios.get(`api/getAfdeling`).then(response => {
             if (response.data.status === 200) {
-                this.setState({afdelingen: response.data.afdelingen});
-                // console.log(this.state.afdelingen)
-    }});
+                this.setState({afdelingen: response.data.afdelingen})
+            }
+    
+            
+}
+);         
+    }
+
+    kanker = () => {
+        for (let i = 0; i < this.state.afdelingen.length; i++) {
+            sessionStorage.setItem(this.state.afdelingen[i].name + "_check", null)
+        }
     }
 
     saveAfdeling = (event, afdeling) => {
@@ -81,6 +89,8 @@ class Home extends React.Component {
     render() {
         if (this.state.onLoad === true) {
             this.getData();
+            this.kanker();
+
             this.setState({onLoad:false})
         }
 
@@ -94,18 +104,18 @@ class Home extends React.Component {
                 <h1>ShiftAssist</h1>
                 <h2>Select station</h2>
                 
+
                 <a href='/admin' className="Button">Log in</a>
                 <a href='/agt' className='Button'>AGT<i className={sessionStorage.getItem('AGTchecked')}></i></a>
                 <a href='/bok' className='Button'>BOK<i className={sessionStorage.getItem('BOKchecked')}></i></a>
                 <a href='/spin' className='Button'>SPIN<i className={sessionStorage.getItem('SPINchecked')}></i></a>
                 <a href='/pkt' className='Button'>PKT<i className={sessionStorage.getItem('PKTchecked')}></i></a>
-                <article>
                     {this.state.afdelingen.map(afdeling => {
                         return (
-                            <section onClick={event => this.saveAfdeling(event, afdeling.name)} className='Button'>{afdeling.name}</section>
+                            <a onClick={event => this.saveAfdeling(event, afdeling.name)} className='Button'> {afdeling.name}<i className={sessionStorage.getItem(afdeling.name + "_check")}></i></a>
                         ) 
                     })}     
-                </article>
+
    
                 <a href='/flow' className={sessionStorage.getItem('toggleDisabled')}>Current Flow</a>
                 <a href='/guide' className='Button'>Help</a>
