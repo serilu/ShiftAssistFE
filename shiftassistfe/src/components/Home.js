@@ -22,7 +22,8 @@ class Home extends React.Component {
         for (let i = 0; i < this.ALL_fields.length; i++) {
             for (let j = 0; j < this.ALL_fields[i].length; j++) {
                 if (this.ALL_fields[i][j] == null) {
-                    localStorage.setItem('toggleDisabled', 'Button Disabled');
+                    sessionStorage.setItem('toggleDisabled', 'Button Disabled');
+                    
                 }
             }
         }
@@ -73,7 +74,7 @@ class Home extends React.Component {
 );         
     }
 
-    kanker = () => {
+    sessionStorageSetter = () => {
         for (let i = 0; i < this.state.afdelingen.length; i++) {
             sessionStorage.setItem(this.state.afdelingen[i].name + "_check", null)
         }
@@ -89,7 +90,7 @@ class Home extends React.Component {
     render() {
         if (this.state.onLoad === true) {
             this.getData();
-            this.kanker();
+            this.sessionStorageSetter();
 
             this.setState({onLoad:false})
         }
@@ -105,7 +106,7 @@ class Home extends React.Component {
                 <h2>Select station</h2>
                 
 
-                <a href='/admin' className="Button">Log in</a>
+                <a href='/admin' className="Button">Voeg Afdeling</a>
                 <a href='/agt' className='Button'>AGT<i className={sessionStorage.getItem('AGTchecked')}></i></a>
                 <a href='/bok' className='Button'>BOK<i className={sessionStorage.getItem('BOKchecked')}></i></a>
                 <a href='/spin' className='Button'>SPIN<i className={sessionStorage.getItem('SPINchecked')}></i></a>

@@ -3,6 +3,7 @@
     --current-bok: 104%;
     --current-spin: 111%;
     --current-pkt: 95%;
+    --current-new: 100%;
 }
 
 .Flow-main {
@@ -83,6 +84,11 @@
 .current-pkt {
     width: var(--current-pkt);
 }
+
+.current-new {
+    width: var(--current-new);
+}
+
 
 .suggestedAction {
     margin-top: 30px;
