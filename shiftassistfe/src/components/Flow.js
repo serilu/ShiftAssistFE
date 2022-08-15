@@ -5,8 +5,19 @@ import './Flow.css';
 
 class Flow extends React.Component {
 
-    state = { currentAGT: 0, currentBOK: 0, currentSPIN: 0, currentPKT: 0 };
+    state = { currentAGT: 0, currentBOK: 0, currentSPIN: 0, currentPKT: 0, afdelingen: [] };
     s = 0;
+
+    getData = () => {
+
+        axios.get(`api/getAfdeling`).then(response => {
+            if (response.data.status === 200) {
+                this.setState({afdelingen: response.data.afdelingen})
+            }
+    
+}
+);         
+    }
 
     getTestDataLength = () => {
         const BASE_URL = "http://localhost:8000/api/itemdetection";
@@ -90,12 +101,13 @@ class Flow extends React.Component {
 
     onload = event => {
         event.preventDefault();
-        this.interval = window.setInterval(this.checkAPI, 1000);
+        this.interval = window.setInterval(this.checkAPI, 2000);
         
         //this.checkAPI();
     }
 
     render() {
+        this.getData();
         this.setGraphWidths();
         if (this.s > this.getTestDataLength) {
             clearInterval(this.interval);
@@ -143,6 +155,19 @@ class Flow extends React.Component {
                         </div>
                         {PKT_diff > 0 ? <p>{PKT_diff} ▲</p> : <p>{Math.abs(PKT_diff)} ▼</p>}
                     </section>
+
+                    {this.state.afdelingen.map(afdeling => {
+                        return (
+                            <section className='graph-section'>
+                                <div className='graph-bar'>
+                                    {afdeling.name}
+                                    <div className='graph-bar-current'></div>
+                                </div>
+                                <p>NaN ▼</p>
+                            </section>
+                        ) 
+                    })}     
+
                 </section>
                 <header className='header'>
                     <p>Suggested actions</p>
