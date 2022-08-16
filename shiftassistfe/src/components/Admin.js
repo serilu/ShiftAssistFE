@@ -72,7 +72,7 @@ class Admin extends React.Component {
         this.callDB()
     }
     callDB = () => {
-        this.setState({loading: true})
+        // this.setState({loading: true})
 
         const dbData = {
             pakketType1: this.state.pakketType1,
@@ -89,7 +89,11 @@ class Admin extends React.Component {
                 console.log(response.data)
                 window.location.replace("/home");
 
-    }});
+
+    } else {
+        window.location.replace("/admin");
+    }
+    });
     }
 
     render() {
