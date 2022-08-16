@@ -11,6 +11,7 @@ class Admin extends React.Component {
         pakketType3: "", 
         pakketType4: "", 
         naamAfdeling: "",
+        loading: false,
 
     };
 
@@ -68,9 +69,10 @@ class Admin extends React.Component {
 
     submit = (event) => {
         event.preventDefault();
-        this.callDB();
+        this.callDB()
     }
     callDB = () => {
+        this.setState({loading: true})
 
         const dbData = {
             pakketType1: this.state.pakketType1,
@@ -85,39 +87,54 @@ class Admin extends React.Component {
             if (response.data.status === 200) {
                 console.log("yo hij doet het man")
                 console.log(response.data)
+                window.location.replace("/home");
 
     }});
     }
 
     render() {
-        return (
+
+        if (this.state.loading) {
+            return(
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            )
+            
+        } else {
+            return (
 
             
-            <main className="login_main">
-             <nav className='navigation'>
-                  <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
-                  <h1>Log In </h1>
-              </nav>
-                <form enctype="multipart/form-data" action="/products" method="post" className="login_main_form" onSubmit={this.submit}>
-                
-                        <label className="login_main_form_section_label" >Naam Afdeling:</label>
-                        <input className="login_main_form_section_input" placeholder='adfdeling naam' onChange={this.saveName} type="text"/><br/>
-
-                         <label className="login_main_form_section_label" >Aantal pakkettypes</label>
-
-                        <section id="pakketNamen">
-                            <input required id="1" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
-                            <input id="2" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
-                            <input id="3" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
-                            <input id="4" type="text" className="pakketNaamInput" onChange={this.saveType} name="types"/>
+                <main className="login_main">
+                 <nav className='navigation'>
+                      <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
+                      <h1>Afdeling Toevoegen </h1>
+                  </nav>
+                    <form enctype="multipart/form-data" action="/products" method="post" className="login_main_form" onSubmit={this.submit}>
+    
+    
+                        <section className="login_main_form_section">
+                            <label className="login_main_form_section_label">Naam Afdeling</label>
+                            <input required className="login_main_form_section_input" placeholder='adfdeling naam' onChange={this.saveName} type="text"/>
+    
                         </section>
-
-                        <button className="login_main_form_button" type="submit"> Verzend</button>
-
-                </form>
-            </main>
-           
-        );
+    
+    
+                            <section className='login_main_form_section'>
+                                <label className="login_main_form_section_label" >Naam Pakketten</label>
+                                <section id="pakketNamen">
+                                    <input required id="1" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input id="2" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input id="3" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input id="4" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
+                                </section>
+                            </section>
+    
+                            <button className="Button" type="submit"> Verzend</button>
+    
+                    </form>
+                </main>
+               
+            );
+        }
     }
 }
 

@@ -114,7 +114,7 @@ class Home extends React.Component {
                     <h2>Select station</h2>
                     
     
-                    <a href='/admin' className="Button">Voeg Afdeling</a>
+                    
                     <a href='/agt' className='Button'>AGT<i className={sessionStorage.getItem('AGTchecked')}></i></a>
                     <a href='/bok' className='Button'>BOK<i className={sessionStorage.getItem('BOKchecked')}></i></a>
                     <a href='/spin' className='Button'>SPIN<i className={sessionStorage.getItem('SPINchecked')}></i></a>
@@ -127,6 +127,7 @@ class Home extends React.Component {
     
        
                     <a href='/flow' className={sessionStorage.getItem('toggleDisabled')}>Current Flow</a>
+                    <a href='/admin' className="Button Button_afdeling">Voeg Afdeling</a>
                     <a href='/guide' className='Button'>Help</a>
                 </main>
                 </body>

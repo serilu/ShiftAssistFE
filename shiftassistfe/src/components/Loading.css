@@ -1,5 +1,5 @@
 :root {
-    --yellow: #d1076c;
+    --pink: #d1076c;
 }
 
 .lds-ring {
@@ -8,21 +8,21 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80px;
-    height: 80px;
+    width: 8rem;
+    height: 8rem;
     z-index:11;
   }
   .lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border: 8px solid var(--yellow);
+    width: 6.4rem;
+    height: 6.4rem;
+    margin: 0.8rem;
+    border: 0.8rem solid var(--pink);
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: var(--yellow) transparent transparent transparent;
+    border-color: var(--pink) transparent transparent transparent;
   }
   .lds-ring div:nth-child(1) {
     animation-delay: -0.45s;

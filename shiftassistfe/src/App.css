@@ -43,6 +43,12 @@
   transition: linear 0.2s;
 }
 
+.Button_afdeling{
+
+  background: #E10000;
+
+}
+
 .Button:hover{
   background: #00A1E1;
 }

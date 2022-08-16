@@ -2,4 +2,71 @@
     height: 100vh;
     background: linear-gradient(rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
     backdrop-filter: blur(6px);
+
 }
+
+.login_main_form{
+
+    margin-top:5rem;
+}
+
+
+.login_main_form_section{
+    width:100%;
+    margin:0 auto;
+    margin-bottom: 5rem;
+
+
+}
+
+
+.login_main_form_section_label{
+    
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 20px;
+    color: #3440B6;
+    margin: auto;
+    text-align: center;
+
+
+}
+
+
+.login_main_form_section_input{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height:3rem;
+    color: #ADB5C5;
+    background: rgba(255, 255, 255, 0.5);
+    border: 2px solid #ADB5C5;
+    padding: 0.1rem 2rem;
+    border-radius: 10px;
+    width:80%;
+    margin-top: 2rem;
+    text-align: center;
+
+    
+}
+
+
+.login_main_form_section_pakketnamen{
+    width:60%;
+    margin:0 auto;
+   
+}
+
+
+@media only screen and (min-width: 970px) {
+    .login_main_form_section_input{
+        width:60%;
+    
+    }
+    .login_main_form_section_label{
+        display:block;
+    }
+
+  }
+
