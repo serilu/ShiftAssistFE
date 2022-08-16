@@ -95,6 +95,8 @@ class Home extends React.Component {
             this.sessionStorageSetter();
 
             this.setState({onLoad:false})
+            this.checkFields();
+            this.checkAllFields();
         }
 
         if (this.state.loading) {
@@ -131,8 +133,6 @@ class Home extends React.Component {
             );
         }
 
-        this.checkFields();
-        this.checkAllFields();
 
     }
 }
