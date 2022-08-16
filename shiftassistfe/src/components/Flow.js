@@ -2,22 +2,22 @@ import React from 'react';
 import axios from "axios";
 import back from '../assets/arrow-back.svg';
 import './Flow.css';
+import './Loading.css';
 
 class Flow extends React.Component {
 
-    state = { currentAGT: 0, currentBOK: 0, currentSPIN: 0, currentPKT: 0, afdelingen: [] };
+    state = { currentAGT: 0, currentBOK: 0, currentSPIN: 0, currentPKT: 0, afdelingen: [], afdelingenCheck: true, loading: true, };
     s = 0;
 
     getData = () => {
-
-        axios.get(`api/getAfdeling`).then(response => {
-            if (response.data.status === 200) {
-                this.setState({afdelingen: response.data.afdelingen})
-            }
+            axios.get(`api/getAfdeling`).then(response => {
+                if (response.data.status === 200) {
+                    this.setState({afdelingen: response.data.afdelingen, loading: false})
+                }
+            })
+        } 
     
-}
-);         
-    }
+
 
     getTestDataLength = () => {
         const BASE_URL = "http://localhost:8000/api/itemdetection";
@@ -101,94 +101,107 @@ class Flow extends React.Component {
 
     onload = event => {
         event.preventDefault();
-        this.interval = window.setInterval(this.checkAPI, 2000);
+        this.interval = window.setInterval(this.checkAPI, 1000);
         
         //this.checkAPI();
     }
 
     render() {
-        this.getData();
-        this.setGraphWidths();
-        if (this.s > this.getTestDataLength) {
-            clearInterval(this.interval);
+        if (this.state.afdelingenCheck === true) {
+            this.getData();
+            this.setState({afdelingenCheck: false})
         }
-        var AGT_diff = parseInt(sessionStorage.getItem('AGT_diff'));
-        var BOK_diff = parseInt(sessionStorage.getItem('BOK_diff'));
-        var PKT_diff = parseInt(sessionStorage.getItem('PKT_diff'));
-        var SPIN_diff = parseInt(sessionStorage.getItem('SPIN_diff'));
 
-        return (
-            <main className="Flow-main" onLoad={this.onload}>
-                <nav className='navigation'>
-                    <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
-                    <h1>Current Flow</h1>
-                </nav>
-                <header className='header'>
-                    <p>Station</p> <p className='rightp'>%</p>
-                </header>
-                <section className='graph'>
-                    <section className='graph-section'>
-                        <div className='graph-bar'>
-                            AGT
-                            <div className='graph-bar-current current-agt'></div>
-                        </div>
-                        {AGT_diff > 0 ? <p>{AGT_diff} ▲</p> : <p>{Math.abs(AGT_diff)} ▼</p>}
+        if (this.state.loading) {
+            return(
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            )
+            
+        } else {
+            this.setGraphWidths();
+            if (this.s > this.getTestDataLength) {
+                clearInterval(this.interval);
+            }
+            var AGT_diff = parseInt(sessionStorage.getItem('AGT_diff'));
+            var BOK_diff = parseInt(sessionStorage.getItem('BOK_diff'));
+            var PKT_diff = parseInt(sessionStorage.getItem('PKT_diff'));
+            var SPIN_diff = parseInt(sessionStorage.getItem('SPIN_diff'));
+    
+            return (
+                <main className="Flow-main" onLoad={this.onload}>
+                    <nav className='navigation'>
+                        <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
+                        <h1>Current Flow</h1>
+                    </nav>
+                    <header className='header'>
+                        <p>Station</p> <p className='rightp'>%</p>
+                    </header>
+                    <section className='graph'>
+                        <section className='graph-section'>
+                            <div className='graph-bar'>
+                                AGT
+                                <div className='graph-bar-current current-agt'></div>
+                            </div>
+                            {AGT_diff > 0 ? <p>{AGT_diff} ▲</p> : <p>{Math.abs(AGT_diff)} ▼</p>}
+                        </section>
+                        <section className='graph-section'>
+                            <div className='graph-bar'>
+                                BOK
+                                <div className='graph-bar-current current-bok'></div>
+                            </div>
+                            {BOK_diff > 0 ? <p>{BOK_diff} ▲</p> : <p>{Math.abs(BOK_diff)} ▼</p>}
+                        </section>
+                        <section className='graph-section'>
+                            <div className='graph-bar'>
+                                SPIN
+                                <div className='graph-bar-current current-spin'></div>
+                            </div>
+                            {SPIN_diff > 0 ? <p>{SPIN_diff} ▲</p> : <p>{Math.abs(SPIN_diff)} ▼</p>}
+                        </section>
+                        <section className='graph-section'>
+                            <div className='graph-bar'>
+                                PKT
+                                <div className='graph-bar-current current-pkt'></div>
+                            </div>
+                            {PKT_diff > 0 ? <p>{PKT_diff} ▲</p> : <p>{Math.abs(PKT_diff)} ▼</p>}
+                        </section>
+    
+                        {this.state.afdelingen.map(afdeling => {
+                            return (
+                                <section className='graph-section'>
+                                    <div className='graph-bar'>
+                                        {afdeling.name}
+                                        <div className='graph-bar-current'></div>
+                                    </div>
+                                    <p>NaN ▼</p>
+                                </section>
+                            ) 
+                        })}     
+    
                     </section>
-                    <section className='graph-section'>
-                        <div className='graph-bar'>
-                            BOK
-                            <div className='graph-bar-current current-bok'></div>
-                        </div>
-                        {BOK_diff > 0 ? <p>{BOK_diff} ▲</p> : <p>{Math.abs(BOK_diff)} ▼</p>}
+                    <header className='header'>
+                        <p>Suggested actions</p>
+                    </header>
+                    <section className='suggestedAction'>
+                        <section className='higher'>
+                            {AGT_diff > 0 && <p>AGT</p>}
+                            {BOK_diff > 0 && <p>BOK</p>}
+                            {SPIN_diff > 0 && <p>SPIN</p>}
+                            {PKT_diff > 0 && <p>PKT</p>}
+                        </section>
+                        <p>ᐅᐅᐅ</p>
+                        <section className='lower'>
+                            {AGT_diff < 0 && <p>AGT</p>}
+                            {BOK_diff < 0 && <p>BOK</p>}
+                            {SPIN_diff < 0 && <p>SPIN</p>}
+                            {PKT_diff < 0 && <p>PKT</p>}
+                        </section>
                     </section>
-                    <section className='graph-section'>
-                        <div className='graph-bar'>
-                            SPIN
-                            <div className='graph-bar-current current-spin'></div>
-                        </div>
-                        {SPIN_diff > 0 ? <p>{SPIN_diff} ▲</p> : <p>{Math.abs(SPIN_diff)} ▼</p>}
-                    </section>
-                    <section className='graph-section'>
-                        <div className='graph-bar'>
-                            PKT
-                            <div className='graph-bar-current current-pkt'></div>
-                        </div>
-                        {PKT_diff > 0 ? <p>{PKT_diff} ▲</p> : <p>{Math.abs(PKT_diff)} ▼</p>}
-                    </section>
+                </main>
+            )
+        }
+        
 
-                    {this.state.afdelingen.map(afdeling => {
-                        return (
-                            <section className='graph-section'>
-                                <div className='graph-bar'>
-                                    {afdeling.name}
-                                    <div className='graph-bar-current'></div>
-                                </div>
-                                <p>NaN ▼</p>
-                            </section>
-                        ) 
-                    })}     
-
-                </section>
-                <header className='header'>
-                    <p>Suggested actions</p>
-                </header>
-                <section className='suggestedAction'>
-                    <section className='higher'>
-                        {AGT_diff > 0 && <p>AGT</p>}
-                        {BOK_diff > 0 && <p>BOK</p>}
-                        {SPIN_diff > 0 && <p>SPIN</p>}
-                        {PKT_diff > 0 && <p>PKT</p>}
-                    </section>
-                    <p>ᐅᐅᐅ</p>
-                    <section className='lower'>
-                        {AGT_diff < 0 && <p>AGT</p>}
-                        {BOK_diff < 0 && <p>BOK</p>}
-                        {SPIN_diff < 0 && <p>SPIN</p>}
-                        {PKT_diff < 0 && <p>PKT</p>}
-                    </section>
-                </section>
-            </main>
-        )
     }
 }
 

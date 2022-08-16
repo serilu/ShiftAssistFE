@@ -2,6 +2,7 @@ import React from 'react';
 import back from '../../assets/arrow-back.svg';
 import './Station.css';
 import axios from 'axios';
+import '../Loading.css';
 
 class Afdeling extends React.Component {
 
@@ -13,6 +14,7 @@ class Afdeling extends React.Component {
         onLoad: true, 
         test: [],
         id: 0,
+        loading: true,
     };
 
 
@@ -31,7 +33,7 @@ class Afdeling extends React.Component {
         axios.post(`api/getPakkettype`, afdelingData).then(response => {
             console.log(response)
             if (response.data.status === 200) {
-                this.setState({pakkettypes: Object.values(response.data.pakkettype)});
+                this.setState({pakkettypes: Object.values(response.data.pakkettype), loading: false});
                 
                 // this.setState({afdeling: response.data.pakkettype[0].afdeling})
                 // console.log(this.state.afdeling)
@@ -57,35 +59,44 @@ class Afdeling extends React.Component {
             this.setState({onLoad:false})
         }
 
-
-        return (
-            
-            <main className="Station-main">
-                <nav className='navigation'>
-                    <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
-                    <h1>{sessionStorage.getItem("afdeling")}</h1>
-                </nav>
-                <header className='header'>
-                    <p>Type</p> <p className='rightp'>Amount</p>
-                </header>
-
-            <form onSubmit={this.submit}>
-                <article id="pakketten">
-                    {this.state.pakkettypes.map((pakkettype) => {
-
-                        return (
-                            <section className='inputLine'>
-                                <label htmlFor="sampling">{pakkettype.pakkettype}</label>
-                                <input type="number" id={pakkettype.pakkettype} name={pakkettype.pakkettype} min="0" max="999" placeholder={sessionStorage.getItem(pakkettype.pakkettype)} onChange={this.setValue}></input>
-                            </section>
-                        ) 
-                    })}     
-                </article>
         
-                <button type="submit" className='Button'>Submit</button>
-            </form>
-            </main>
-        )
+        if (this.state.loading) {
+            return(
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            )
+            
+        } else {
+            return (
+            
+                <main className="Station-main">
+                    <nav className='navigation'>
+                        <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
+                        <h1>{sessionStorage.getItem("afdeling")}</h1>
+                    </nav>
+                    <header className='header'>
+                        <p>Type</p> <p className='rightp'>Amount</p>
+                    </header>
+    
+                <form onSubmit={this.submit}>
+                    <article id="pakketten">
+                        {this.state.pakkettypes.map((pakkettype) => {
+    
+                            return (
+                                <section className='inputLine'>
+                                    <label htmlFor="sampling">{pakkettype.pakkettype}</label>
+                                    <input type="number" id={pakkettype.pakkettype} name={pakkettype.pakkettype} min="0" max="999" placeholder={sessionStorage.getItem(pakkettype.pakkettype)} onChange={this.setValue}></input>
+                                </section>
+                            ) 
+                        })}     
+                    </article>
+            
+                    <button type="submit" className='Button'>Submit</button>
+                </form>
+                </main>
+            )
+                    }
+
+        
 
     }
 }
