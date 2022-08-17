@@ -17,7 +17,6 @@ class Admin extends React.Component {
 
     saveName = (event) => {
         this.setState({naamAfdeling: event.target.value});
-        console.log(this.state.naamAfdeling);
     }
 
     onSearch = (event) =>{
@@ -54,25 +53,11 @@ class Admin extends React.Component {
 
     }
 
-    // saveType(event){
-    //     console.log("a neef");
-    
-    //     event.preventDefault();
-    //     let pakketString = "";
-
-    //     for (let i = 0; i < this.state.aantalTypes; i++) {
-    //         let value = document.getElementById(i+1).value
-    //         pakketString = pakketString + "|" + value;
-    //         this.setState({pakketTypes: pakketString})
-    //     }
-    // };
-
     submit = (event) => {
         event.preventDefault();
         this.callDB()
     }
     callDB = () => {
-        // this.setState({loading: true})
 
         const dbData = {
             pakketType1: this.state.pakketType1,
@@ -81,12 +66,9 @@ class Admin extends React.Component {
             pakketType4: this.state.pakketType4,
             name: this.state.naamAfdeling,
         }
-        console.log(dbData);
+
         axios.post(`api/addAfdeling`, dbData).then(response => {
-            console.log(response)
             if (response.data.status === 200) {
-                console.log("yo hij doet het man")
-                console.log(response.data)
                 window.location.replace("/home");
 
 
@@ -107,28 +89,28 @@ class Admin extends React.Component {
             return (
 
             
-                <main className="login_main">
+                <main className="admin_main">
                  <nav className='navigation'>
                       <a href='/home'><img src={back} className="back" alt="back arrow" /></a>
                       <h1>Afdeling Toevoegen </h1>
                   </nav>
-                    <form enctype="multipart/form-data" action="/products" method="post" className="login_main_form" onSubmit={this.submit}>
+                    <form enctype="multipart/form-data" action="/products" method="post" className="admin_main_form" onSubmit={this.submit}>
     
     
-                        <section className="login_main_form_section">
-                            <label className="login_main_form_section_label">Naam Afdeling</label>
-                            <input required className="login_main_form_section_input" placeholder='adfdeling naam' onChange={this.saveName} type="text"/>
+                        <section className="admin_main_form_section">
+                            <label className="admin_main_form_section_label">Naam Afdeling</label>
+                            <input required className="admin_main_form_section_input" placeholder='Nieuwe afdeling naam' onChange={this.saveName} type="text"/>
     
                         </section>
     
     
-                            <section className='login_main_form_section'>
-                                <label className="login_main_form_section_label" >Naam Pakketten</label>
+                            <section className='admin_main_form_section'>
+                                <label className="admin_main_form_section_label" >Naam Pakkettypes</label>
                                 <section id="pakketNamen">
-                                    <input required id="1" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
-                                    <input id="2" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
-                                    <input id="3" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
-                                    <input id="4" type="text" className="login_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input required id="1" type="text" placeholder='Naam van pakkettype 1' className="admin_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input id="2" type="text" placeholder='Naam van pakkettype 2' className="admin_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input id="3" type="text" placeholder='Naam van pakkettype 3' className="admin_main_form_section_input" onChange={this.saveType} name="types"/>
+                                    <input id="4" type="text" placeholder='Naam van pakkettype 4' className="admin_main_form_section_input" onChange={this.saveType} name="types"/>
                                 </section>
                             </section>
     

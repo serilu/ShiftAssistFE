@@ -31,12 +31,9 @@ class Afdeling extends React.Component {
         }
 
         axios.post(`api/getPakkettype`, afdelingData).then(response => {
-            console.log(response)
             if (response.data.status === 200) {
                 this.setState({pakkettypes: Object.values(response.data.pakkettype), loading: false});
                 
-                // this.setState({afdeling: response.data.pakkettype[0].afdeling})
-                // console.log(this.state.afdeling)
     }});   
     }
 

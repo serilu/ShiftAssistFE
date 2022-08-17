@@ -83,7 +83,6 @@ class Home extends React.Component {
     }
 
     saveAfdeling = (event, afdeling) => {
-        console.log(afdeling)
         sessionStorage.removeItem('afdeling');
         sessionStorage.setItem('afdeling', afdeling);
         window.location.replace("/afdeling");
@@ -101,7 +100,7 @@ class Home extends React.Component {
 
         if (this.state.loading) {
             return(
-                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
             )
             
         } else {

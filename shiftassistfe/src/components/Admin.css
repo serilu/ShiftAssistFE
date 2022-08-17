@@ -1,17 +1,17 @@
-.login_main {
+.admin_main {
     height: 100vh;
     background: linear-gradient(rgba(255, 255, 255, 0.7) 60%, rgba(255, 255, 255, 0) 100%);
     backdrop-filter: blur(6px);
 
 }
 
-.login_main_form{
+.admin_main_form{
 
     margin-top:5rem;
 }
 
 
-.login_main_form_section{
+.admin_main_form_section{
     width:100%;
     margin:0 auto;
     margin-bottom: 5rem;
@@ -20,7 +20,7 @@
 }
 
 
-.login_main_form_section_label{
+.admin_main_form_section_label{
     
     font-style: normal;
     font-weight: 400;
@@ -34,7 +34,7 @@
 }
 
 
-.login_main_form_section_input{
+.admin_main_form_section_input{
     font-style: normal;
     font-weight: 400;
     font-size: 2rem;
@@ -52,7 +52,7 @@
 }
 
 
-.login_main_form_section_pakketnamen{
+.admin_main_form_section_pakketnamen{
     width:60%;
     margin:0 auto;
    
@@ -60,11 +60,11 @@
 
 
 @media only screen and (min-width: 970px) {
-    .login_main_form_section_input{
+    .admin_main_form_section_input{
         width:60%;
     
     }
-    .login_main_form_section_label{
+    .admin_main_form_section_label{
         display:block;
     }
 
